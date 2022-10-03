@@ -39,6 +39,8 @@ bld/
 #Generated Virtual Env File
 venv/
 
+statmachine.json
+values.json
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/
@@ -352,3 +354,4 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+data/values.json
