@@ -1,1 +1,9 @@
-{"body": {"0": {"name": "Visual Studio Code", "url": null, "timeStamps": {"start": 1664788581834}, "state": "Workspace: DiscoMon", "type": "None", "details": "Editing run.sh", "assets": {"small_text": "Visual Studio Code", "small_image": "565945770067623946", "large_text": "Editing a SHELL file", "large_image": "565945350851002389"}}, "1": {"type": "listening", "name": "Spotify", "artist": "P.T. Adamczyk", "album": "GWENT: The Witcher Card Game (Original Game Soundtrack)", "albumCoverUrl": "https://i.scdn.co/image/ab67616d0000b27373260a1c4c36536aae325a83", "title": "Plots And Intrigues", "trackID": "3OfUCsimeoZnRgaZRgL8HG", "trackUrl": "https://open.spotify.com/track/3OfUCsimeoZnRgaZRgL8HG", "startedAt": "09:19 AM"}}, "headers": {"Authorization": "Token 81476205a0e4310d12596330bd56b3fa3962494f", "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 12_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/105.0 Mobile/15E148 Safari/605.1.15"}, "internalReference": {"docName": "request", "tabName": "Request"}, "url": ""}
+{
+  "body": {},
+  "headers": {
+    "Authorization": "",
+    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 12_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/105.0 Mobile/15E148 Safari/605.1.15"
+  },
+  "internalReference": { "docName": "request", "tabName": "Request" },
+  "url": ""
+}
