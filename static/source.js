@@ -2,11 +2,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     //On-Load Enviroment Settings
     setActiveTab("log-tab");
-
-
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
        
     function convertJson(str) { //Converts "pretty" string JSON to JSON object
         return JSON.parse(str);
@@ -51,7 +46,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     function setActiveTab(tab) { //Sets active tab in localStorage
         localStorage.setItem("active-tab", tab);
         var con = document.getElementById('console');
-        if (tab == "Values-tab") { //If tab is Values, allows for saving and editing of data
+        if (["Values-tab", "Request-tab"].includes(tab)) { //If tab is Values, allows for saving and editing of data
             saveButton.disabled = false;
             con.readOnly = false;
 
@@ -97,12 +92,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         Http.onreadystatechange = function () {
             if (this.readyState == this.DONE) {
                  //If current tab is log tab, post data
-                    postAndScrollDown(this.responseText);
+                    postAndScrollDown(JSON.stringify(JSON.parse(this.response), null, "\n\t"));
                 
                 }
             }
         }
-    };getStat();setInterval(getStat, 1000);
+    };setInterval(getStat, 5000);
 
 
     var consoleTabs = document.getElementsByName("console-tabs")
@@ -119,7 +114,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     $(serverSwitch).change(async function() {
         if (this.checked == false) {
             dIOSwitch.checked = false;
-            tIOSwitch.checked = false;
             sendNullRequest("/shutdown");
             postAndScrollDown("Goodbye!");
             await sleep(2000);
@@ -153,47 +147,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
     
-    //New on-off slider for telegram bot
-    var tIOSwitch = document.getElementById("telegram-io-switch");
-    $(tIOSwitch).change(async function() {
-        if (this.checked) {
-            const Http = new XMLHttpRequest();
-            Http.open("POST", "/on");
-            Http.setRequestHeader("Content-Type", "application/json");
-            let data = JSON.stringify({"type":"telegram"})
-            Http.send(data);
-            Http.onreadystatechange = function () {
-                if (this.readyState == this.DONE) {
-                    if (this.responseText == "Missing Values") {
-                        tIOSwitch.checked = false;
-                        alert("Error: Missing Values.\nCheck to see that all fields are filled.")
-                        switchTab("Values-tab");
-                    } 
-                }
-            }
-            
-        }
-        else {
-            sendRequestWithData("/off", {"type":"telegram"});
-        }
-    });
 
-    //On-Off Sliders for radarr and sonarr
-    var radsonSwitches =  document.getElementsByName("radson-io-switch");
-    for (let x = 0; x < radsonSwitches.length; x++) {
-        var s = radsonSwitches[x];
-        $(s).change(async function() {
-            url = "/enable";
-            if (this.checked) {
-                const j = {[this.value] : true};
-                sendRequestWithData(url, j);
-            }
-            else {
-                const j = {[this.value] : false};
-                sendRequestWithData(url, j);
-            }
-        });
-    }
 
     //Opening form tab
     document.getElementById("set-values-tab").onclick = function() {

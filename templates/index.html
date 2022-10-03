@@ -97,9 +97,6 @@ Set User:
 Both Discord users can be added with this method.
 - "Username#0000" is the correct format
 
-Delay [DISCORD ONLY]:
-0 - ∞ seconds, 1 is default, must be a positive whole number. Represents the delay between messages.
-
 
           </textarea>
         </div>
@@ -107,6 +104,12 @@ Delay [DISCORD ONLY]:
         {% for field in values if field != "internalReference" %}
         <div class="form-floating mb-3" style="margin-top: 20px;">
           <input type="text" class="form-control" name="cred-form-field" id="{{field}}" style="background-color:#16191d; color:#966fd6;" spellcheck="false" value="{{values[field]}}">
+          <label for="cred-form-input">{{field}}</label>
+        </div>
+        {% endfor %}
+        {% for field in request if field not in ["internalReference", "body"] %}
+        <div class="form-floating mb-3" style="margin-top: 20px;">
+          <input type="text" class="form-control" name="cred-form-field" id="{{field}}" style="background-color:#16191d; color:#966fd6;" spellcheck="false" value="{{request[field]}}">
           <label for="cred-form-input">{{field}}</label>
         </div>
         {% endfor %}

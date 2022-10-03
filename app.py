@@ -2,10 +2,12 @@ from flask import Flask, render_template, request, jsonify
 
 from subprocess import Popen
 from datetime import date
+from collections import OrderedDict
 import atexit
 import signal
 import json
 import os, sys
+import requests
 from sys import platform
 
 
@@ -20,12 +22,7 @@ bot_proc = None
 def start_bot():
     global bot_proc
     op_call = None
-    if os.path.exists(os.path.join(os.path.dirname(__file__), "venv")):
-        print("venv used, in dev mode")
-        op_call = fr".\\venv\Scripts\\python.exe"
-    if platform in ["linux", "linux2"]:
-        op_call = "python"
-    elif platform == "darwin":
+    if platform in ["linux", "linux2", "darwin"]:
         op_call = "python3"
     elif platform == "win32":
         op_call = "python.exe"
@@ -36,13 +33,14 @@ def start_bot():
 
 def kill_bot():
     global bot_proc
-    try:       
+    set_values("statemachine", "botState", False)
+    try:  
         bot_proc.kill()
         bot_proc.wait()
         bot_proc.close()
-        set_values("statemachine", f"botState", False)
-    except Exception as e:
+    except:
         pass
+    
 
 def get_data(file_name):
     with open(os.path.join(os.path.dirname(__file__), "data", f"{file_name}.json"), "r") as fp:
@@ -58,25 +56,45 @@ def set_file(file_name, json_data):
     with open(os.path.join(os.path.dirname(__file__), "data", f"{file_name}.json"), "w") as fpw:
         json.dump(json_data, fpw)
 
+def set_status(status):
+    set_file("activity", status)
+    set_values("request", "body", status)
+    send_request()
+
 def restart_bot():
     kill_bot()
     start_bot()
 
+def parse_request():
+    pass
+
+def send_request():
+    
+    req_file = get_data("request")
+
+    url = req_file["url"]
+
+    payload = req_file["body"]
+
+    headers = req_file['headers']
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    return response.text
+
 #Beginning Routes with default index temp func
 @app.route("/")
 def index():
-    data_list = [get_data("statemachine"), get_data("values")]
+    data_list = [get_data("statemachine"), get_data("values"), get_data("request")]
     return render_template("/index.html",
     data_list = data_list,
     state = data_list[0],
-    values = data_list[1])
-
-#Autocomplete route for user lookup, for admin input in form
-
+    values = data_list[1],
+    request = data_list[2])
 
 @app.route("/stat", methods = ["POST"])
 def get_status():
-    return get_data("statemachine")["userStatus"]
+    return get_data("activity")
 
 @app.route("/save", methods = ["POST"])
 def save_credentials():
@@ -100,7 +118,7 @@ def return_data():
 def turn_bot_on():
     current_state = get_data("statemachine")
     current_values = get_data("values")
-    if current_state[f"botState"]:
+    if current_state["botState"]:
         msg = f"Bot Is Already On"
         return msg
     for x,y in current_values.items():
@@ -133,7 +151,12 @@ def shutdown():
     elif sys.platform == "win32":
         sig = getattr(signal, "SIGKILL", signal.SIGTERM)
         os.kill(os.getpid(), sig)
-    return "Shutting Down"
+    try:
+        shutdown_func = request.environ.get('werkzeug.server.shutdown')
+        shutdown_func()
+    except:
+        pass
+    sys.exit()
 
 
 #Running App Loop
