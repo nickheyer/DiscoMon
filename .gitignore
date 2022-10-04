@@ -39,6 +39,8 @@ bld/
 #Generated Virtual Env File
 venv/
 .vscode/
+.dockerignore
+Dockerfile
 
 
 statmachine.json
