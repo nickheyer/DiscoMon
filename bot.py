@@ -5,7 +5,6 @@ from datetime import datetime
 VALUES = get_data("values")
 DISCORD_TOKEN : str = VALUES["discordToken"]
 watched_user : list[str] = VALUES["watchedUser"]
-delay : int = int(VALUES["delay"])
 
 
 #Declaring intents, must also be configured from Discord portal, see readme
@@ -26,26 +25,23 @@ async def check_status(user, client):
 def parse_act(user):    
     act = user.activities
     d = dict()
-    for i, activity in enumerate(act):
-        d[i] = dict()
+    d["currentStatus"] = dict()
+    for activity in act:
         if isinstance(activity, discord.Spotify):
-            d[i]["type"] = "listening"
-            d[i]["name"] = activity.name
-            d[i]["artist"] = activity.artist
-            d[i]["album"] = activity.album 
-            d[i]["albumCoverUrl"] = activity.album_cover_url
-            d[i]["title"] = activity.title 
-            d[i]["trackID"] = activity.track_id
-            d[i]["trackUrl"] = activity.track_url
-            d[i]["startedAt"] = activity.created_at.strftime("%I:%M %p")
+            d["currentStatus"]["spotifyArtist"] = activity.artist
+            d["currentStatus"]["spotifyAlbum"] = activity.album 
+            d["currentStatus"]["spotifyAlbumCoverUrl"] = activity.album_cover_url
+            d["currentStatus"]["spotifyTitle"] = activity.title
+            d["currentStatus"]["spotifyTrackUrl"] = activity.track_url
         else:
-            d[i]["name"] = activity.name
-            d[i]["url"] = activity.url
-            d[i]["timeStamps"] = activity.timestamps
-            d[i]["state"] = activity.state
-            d[i]["type"] = activity.type[0] if isinstance(activity.type, list) else "None"
-            d[i]["details"] = activity.details
-            d[i]["assets"] = activity.assets
+            d["currentStatus"]["activityName"] = activity.name
+            d["currentStatus"]["activityUrl"] = activity.url
+            d["currentStatus"]["activityState"] = activity.state
+            try:
+                d["currentStatus"]["activityType"] = activity.type[0]
+            except:
+                pass
+            d["currentStatus"]["activityDetails"] = activity.details
             
     set_status(d)
 

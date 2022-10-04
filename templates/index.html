@@ -107,12 +107,6 @@ Both Discord users can be added with this method.
           <label for="cred-form-input">{{field}}</label>
         </div>
         {% endfor %}
-        {% for field in request if field not in ["internalReference", "body"] %}
-        <div class="form-floating mb-3" style="margin-top: 20px;">
-          <input type="text" class="form-control" name="cred-form-field" id="{{field}}" style="background-color:#16191d; color:#966fd6;" spellcheck="false" value="{{request[field]}}">
-          <label for="cred-form-input">{{field}}</label>
-        </div>
-        {% endfor %}
         <button class="btn btn-outline-secondary scenter" type="button" value="save" id="cred-form-save" style="max-width: 40%;margin-top:20px;background-color:#16191d;color:#966fd6">Save</button>
 
 

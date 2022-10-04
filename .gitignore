@@ -29,7 +29,6 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
-[Ll]ogs/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -38,6 +37,8 @@ bld/
 
 #Generated Virtual Env File
 venv/
+.vscode/
+
 
 statmachine.json
 values.json
@@ -91,7 +92,6 @@ StyleCopReport.xml
 *.tmp
 *.tmp_proj
 *_wpftmp.csproj
-*.log
 *.vspscc
 *.vssscc
 .builds
