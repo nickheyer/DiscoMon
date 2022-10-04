@@ -28,11 +28,13 @@ def start_bot():
     elif platform == "win32":
         op_call = "python.exe"
     args = [op_call, f"bot.py"]
+    log_path = os.path.join(os.path.dirname(__file__),
+            "logs",
+            "bot")
+    os.makedirs(log_path, exist_ok=True)
     err_log = open(
         os.path.join(
-            os.path.dirname(__file__),
-            "logs",
-            "bot",
+            log_path,
             f'BOT_{date.today().strftime("%d_%m_%Y")}.log',
         ),
         "a",
