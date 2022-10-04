@@ -41,7 +41,7 @@ venv/
 .vscode/
 .dockerignore
 Dockerfile
-
+assets/
 
 statmachine.json
 values.json
