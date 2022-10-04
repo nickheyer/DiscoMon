@@ -28,20 +28,20 @@ def parse_act(user):
     d["currentStatus"] = dict()
     for activity in act:
         if isinstance(activity, discord.Spotify):
-            d["currentStatus"]["spotifyArtist"] = activity.artist
-            d["currentStatus"]["spotifyAlbum"] = activity.album 
-            d["currentStatus"]["spotifyAlbumCoverUrl"] = activity.album_cover_url
-            d["currentStatus"]["spotifyTitle"] = activity.title
-            d["currentStatus"]["spotifyTrackUrl"] = activity.track_url
+            d["currentStatus"]["spotifyArtist"] = activity.artist if hasattr(activity, "artist") else None
+            d["currentStatus"]["spotifyAlbum"] = activity.album if hasattr(activity, "album") else None 
+            d["currentStatus"]["spotifyAlbumCoverUrl"] = activity.album_cover_url if hasattr(activity, "album_cover_url") else None
+            d["currentStatus"]["spotifyTitle"] = activity.title if hasattr(activity, "title") else None
+            d["currentStatus"]["spotifyTrackUrl"] = activity.track_url if hasattr(activity, "track_url") else None
         else:
-            d["currentStatus"]["activityName"] = activity.name
-            d["currentStatus"]["activityUrl"] = activity.url
-            d["currentStatus"]["activityState"] = activity.state
+            d["currentStatus"]["activityName"] = activity.name if hasattr(activity, "name") else None
+            d["currentStatus"]["activityUrl"] = activity.url if hasattr(activity, "url") else None
+            d["currentStatus"]["activityState"] = activity.state if hasattr(activity, "state") else None
             try:
-                d["currentStatus"]["activityType"] = activity.type[0]
+                d["currentStatus"]["activityType"] = activity.type[0] if hasattr(activity, "type") else None
             except:
                 pass
-            d["currentStatus"]["activityDetails"] = activity.details
+            d["currentStatus"]["activityDetails"] = activity.details if hasattr(activity, "details") else None
             
     set_status(d)
 
