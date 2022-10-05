@@ -36,6 +36,8 @@ Fill in the required information by pressing the "edit" tab or within the json i
 
 You can test that the bot is functional by typing '!dm test' into chat
 
+![image](https://user-images.githubusercontent.com/60236014/193970329-f0b0a50f-9b88-4e0f-adfb-d136ddbbbd48.png)
+
 ## API
 
 The information is sent as a JSON to whichever API endpoint is specified as the "url" in "request.json". You can configure the url, as well as any other parameters/headers in the "request" tab. 
