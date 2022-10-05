@@ -105,6 +105,11 @@ def send_request():
 
     return response.text
 
+@app.before_first_request #auto-starting based on current state stored in statemachine.json
+def startup():
+    current_status = get_data("statemachine")
+    if current_status["botState"]:
+        start_bot()
 
 #Function called on exit, similar to shutdown
 @atexit.register
