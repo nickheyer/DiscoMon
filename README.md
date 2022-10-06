@@ -18,9 +18,16 @@ Running the discord bot requires a discord developer account (https://discord.co
    
 - Full Discord username for monitoring (ex: NicholasHeyer#4212)
 
-Download Docker Image
+Download Docker Image (x86_64 Architecture) 
 ```
 docker image pull nickheyer/discomon:latest
+```
+
+-or-
+
+Download Docker Image (aarch64 Architecture, ie: Raspberry-Pi) 
+```
+docker image pull nickheyer/discomon_rpi:latest
 ```
 Run Docker Container
 ```
