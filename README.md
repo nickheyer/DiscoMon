@@ -18,7 +18,7 @@ Running the discord bot requires a discord developer account (https://discord.co
 
 Fully Automated Installer & Updater (LINUX ONLY) {
 ```bash 
-curl https://raw.githubusercontent.com/nickheyer/DiscoFlix/main/auto_install_update.sh -o auto_install_update.sh && sudo bash auto_install_update.sh
+curl https://raw.githubusercontent.com/nickheyer/DiscoMon/main/auto_install_update.sh -o auto_install_update.sh && sudo bash auto_install_update.sh
 ```
 }
 
