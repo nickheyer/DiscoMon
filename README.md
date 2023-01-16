@@ -12,27 +12,36 @@ Running the discord bot requires a discord developer account (https://discord.co
 
 ## Installation via Docker (Recommended)
 
-- Docker must be installed on your machine. Click [here](https://docs.docker.com/engine/install/) to install Docker.
-
 - Discord API Token (https://discord.com/developers/applications) - READ [THIS](#further-notes)
    
 - Full Discord username for monitoring (ex: NicholasHeyer#4212)
+
+Fully Automated Installer & Updater (LINUX ONLY) {
+```bash 
+curl https://raw.githubusercontent.com/nickheyer/DiscoFlix/main/auto_install_update.sh -o auto_install_update.sh && sudo bash auto_install_update.sh
+```
+}
+
+-or- { (Docker required for the following installation methods)
 
 Download Docker Image (x86_64 Architecture) 
 ```
 docker image pull nickheyer/discomon:latest
 ```
 
--or-
-
 Download Docker Image (aarch64 Architecture, ie: Raspberry-Pi) 
 ```
 docker image pull nickheyer/discomon_rpi:latest
 ```
+
+-after 'docker pull'-
+
 Run Docker Container
 ```
 docker run -d -p 6969:6969 nickheyer/discomon
 ```
+
+}
 
 - The server within the docker container can be accessed at [http://127.0.0.1:6969](http://127.0.0.1:6969)
 <hr />
